@@ -32,7 +32,8 @@ class OrderMap(Layer):
 
     def call(self, x):
         "Implement the layer's logic"
-        x = tf.to_float(x)
+        # x = tf.to_float(x)
+        x = tf.cast(x, dtype=tf.float32)
         zero = tf.fill([tf.shape(x)[0], 1, tf.shape(x)[2]], 0.0)
         x1 = tf.concat([x, zero], axis=1)
         reordered = tf.gather(x1, self.indices, axis=1)
