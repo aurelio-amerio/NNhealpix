@@ -5,7 +5,7 @@ Welcome to NNHealpix documentation! In this tutorial, we show how to
 use the library to perform a classification exercise. We are going to
 project handwritten digits on a sphere, and we will build a simple
 Convolutional Neural Network (CNN) to recognize digits. We will use
-Keras and the MNIST dataset.
+tensorflow.keras and the MNIST dataset.
 
 Build training and validation sets
 ----------------------------------
@@ -14,13 +14,13 @@ We are going to use the MNIST database to build our training and
 validation sets. MINST is a set of 28×28 grayscale images representing
 handwritten digits, and it is a widely-used database for
 classification problems in Machine Learning. The MNIST dataset is
-available in Keras, so we simply load it:
+available in tensorflow.keras, so we simply load it:
 
 .. code:: ipython3
 
-    import keras
-    from keras.datasets import mnist
-    from keras import backend as K
+    import tensorflow.keras
+    from tensorflow.keras.datasets import mnist
+    from tensorflow.keras import backend as K
     K.set_image_dim_ordering("th")
 
     (X_train_2d, y_train), (X_val_2d, y_val) = mnist.load_data()
@@ -52,7 +52,7 @@ apply a random rotation to each of them.
 .. code:: ipython3
 
     import healpy as hp
-    from keras.utils import np_utils
+    from tensorflow.keras.utils import np_utils
     from nnhealpix.projections import projectimages
 
     NTRAIN, NVAL = 10000, 1000
@@ -130,43 +130,43 @@ Build neural network and train
 
 Now it's time to build a neural network capable of recognizing digits. We will
 use a standard architecture used for this kind of tasks in 2-D domains, but
-instead of Keras' 2-D layers we use :class:`nnhealpix.layers.ConvNeighbours`,
+instead of tensorflow.keras' 2-D layers we use :class:`nnhealpix.layers.ConvNeighbours`,
 (convolution on the HEALPix sphere) and :class:`nnhealpix.layers.MaxPooling`
 (max-pooling).
 
 .. code:: ipython3
 
-    import keras.layers
+    import tensorflow.keras.layers
     import nnhealpix.layers
 
-    inputs = keras.layers.Input(shape)
+    inputs = tensorflow.keras.layers.Input(shape)
     x = nnhealpix.layers.ConvNeighbours(NSIDE, filters=32, kernel_size=9)(inputs)
-    x = keras.layers.Activation("relu")(x)
+    x = tensorflow.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE, NSIDE//2)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//2, filters=32, kernel_size=9)(x)
-    x = keras.layers.Activation("relu")(x)
+    x = tensorflow.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//2, NSIDE//4)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//4, filters=32, kernel_size=9)(x)
-    x = keras.layers.Activation("relu")(x)
+    x = tensorflow.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//4, NSIDE//8)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//8, filters=32, kernel_size=9)(x)
-    x = keras.layers.Activation("relu")(x)
+    x = tensorflow.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//8, NSIDE//16)(x)
-    x = keras.layers.Dropout(0.2)(x)
-    x = keras.layers.Flatten()(x)
-    x = keras.layers.Dense(48)(x)
-    x = keras.layers.Activation("relu")(x)
-    x = keras.layers.Dense(num_classes)(x)
-    out = keras.layers.Activation("softmax")(x)
+    x = tensorflow.keras.layers.Dropout(0.2)(x)
+    x = tensorflow.keras.layers.Flatten()(x)
+    x = tensorflow.keras.layers.Dense(48)(x)
+    x = tensorflow.keras.layers.Activation("relu")(x)
+    x = tensorflow.keras.layers.Dense(num_classes)(x)
+    out = tensorflow.keras.layers.Activation("softmax")(x)
 
 The convolution and pooling layers produce intermediate maps whose resolution
-scales down to ``NSIDE=1``. Let's build our model using Keras:
+scales down to ``NSIDE=1``. Let's build our model using tensorflow.keras:
 
 .. code:: ipython3
 
-    model = keras.models.Model(inputs=inputs, outputs=out)
-    opt = keras.optimizers.Adam(lr=0.001)
-    model.compile(loss=keras.losses.mse, optimizer=opt, metrics=["accuracy"])
+    model = tensorflow.keras.models.Model(inputs=inputs, outputs=out)
+    opt = tensorflow.keras.optimizers.Adam(lr=0.001)
+    model.compile(loss=tensorflow.keras.losses.mse, optimizer=opt, metrics=["accuracy"])
 
 
 We train the network, using the ``X_train`` and ``Y_train`` variables we have
@@ -248,7 +248,7 @@ Krachmalnicoff & Tomasi 2019 (https://arxiv.org/abs/1902.04083).
 
 .. code:: ipython3
 
-    from keras.models import load_model
+    from tensorflow.keras.models import load_model
 
     # You can find the .h5 file under the examples/ directory
     modelPT = load_model(
@@ -298,7 +298,7 @@ section:
 
 .. image:: images/output_35_0.png
 
-To inspect how the network works, we can make use of Keras'
+To inspect how the network works, we can make use of tensorflow.keras'
 ``get_layer_output``. Let's show an example. First, we choose a random map in
 the test set:
 

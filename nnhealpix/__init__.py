@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-"""Neural networks on the Healpix sphere in Keras.
+"""Neural networks on the Healpix sphere in tensorflow.keras.
 
-The NNhealpix module implements Keras layers that work on a Healpix
+The NNhealpix module implements tensorflow.keras layers that work on a Healpix
 sphere.
 
 """
