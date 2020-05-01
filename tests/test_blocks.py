@@ -81,7 +81,7 @@ def test_convneighbours_block():
     x = nnhealpix.layers.ConvNeighbours(input_nside, filters=1, kernel_size=9)(inputs)
     model = tensorflow.keras.models.Model(inputs=inputs, outputs=x)
     model.compile(loss=tensorflow.keras.losses.mse, optimizer=tensorflow.keras.optimizers.SGD(lr=0.01))
-    model.set_weights(
+    model.layers[2].set_weights(
         [
             np.array(
                 [
