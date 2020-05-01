@@ -2,9 +2,10 @@
 
 import numpy as np
 import os.path
-from tensorflow.keras.layers import Conv1D
-import tensorflow.keras.backend as K
-from tensorflow.keras.layers import Layer
+import keras
+from keras.layers import Conv1D
+import keras.backend as K
+from keras.layers import Layer
 import tensorflow as tf
 import nnhealpix as nnh
 
@@ -77,7 +78,7 @@ def Dgrade(nside_in, nside_out):
     def f(x):
         y = OrderMap(pixel_indices)(x)
         pool_size = int((nside_in / nside_out) ** 2.0)
-        y = tf.keras.layers.AveragePooling1D(pool_size=pool_size)(y)
+        y = keras.layers.AveragePooling1D(pool_size=pool_size)(y)
         return y
 
     return f
@@ -90,7 +91,7 @@ def Pooling(nside_in, nside_out, layer1D, *args, **kwargs):
         * nside_in (integer): ``NSIDE`` parameter for the input maps.
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
         * layer1D (layer object): a 1-D layer operation, like
-          :code:`tf.keras.layers.MaxPooling1D`
+          :code:`keras.layers.MaxPooling1D`
         * args (any): Positional arguments to be passed to :code:`layer1D`
         * kwargs: keyword arguments to be passed to
           :code:`layer1D`. The keyword :code:`pool_size` should not be
@@ -126,7 +127,7 @@ def MaxPooling(nside_in, nside_out):
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, tf.keras.layers.MaxPooling1D)
+    return Pooling(nside_in, nside_out, keras.layers.MaxPooling1D)
 
 
 def AveragePooling(nside_in, nside_out):
@@ -137,7 +138,7 @@ def AveragePooling(nside_in, nside_out):
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, tf.keras.layers.AveragePooling1D)
+    return Pooling(nside_in, nside_out, keras.layers.AveragePooling1D)
 
 
 def DegradeAndConvNeighbours(

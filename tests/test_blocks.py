@@ -11,10 +11,10 @@ def test_dgrade_block():
     input_nside = 4
     output_nside = 1
     m = np.arange(healpy.nside2npix(input_nside))
-    inputs = tf.keras.layers.Input((len(m), 1))
+    inputs = keras.layers.Input((len(m), 1))
     x = nnhealpix.layers.Dgrade(input_nside, output_nside)(inputs)
-    model = tf.keras.models.Model(inputs=inputs, outputs=x)
-    model.compile(loss=tf.keras.losses.mse, optimizer=tf.keras.optimizers.SGD(lr=0.01))
+    model = keras.models.Model(inputs=inputs, outputs=x)
+    model.compile(loss=keras.losses.mse, optimizer=keras.optimizers.SGD(lr=0.01))
 
     mtensor = m.reshape(1, len(m), 1)
     out = model.predict(mtensor).reshape(healpy.nside2npix(output_nside))
@@ -44,10 +44,10 @@ def test_maxpooling_block():
     input_nside = 4
     output_nside = 1
     m = np.arange(healpy.nside2npix(input_nside))
-    inputs = tf.keras.layers.Input((len(m), 1))
+    inputs = keras.layers.Input((len(m), 1))
     x = nnhealpix.layers.MaxPooling(input_nside, output_nside)(inputs)
-    model = tf.keras.models.Model(inputs=inputs, outputs=x)
-    model.compile(loss=tf.keras.losses.mse, optimizer=tf.keras.optimizers.SGD(lr=0.01))
+    model = keras.models.Model(inputs=inputs, outputs=x)
+    model.compile(loss=keras.losses.mse, optimizer=keras.optimizers.SGD(lr=0.01))
 
     mtensor = m.reshape(1, len(m), 1)
     out = model.predict(mtensor).reshape(healpy.nside2npix(output_nside))
@@ -77,10 +77,10 @@ def test_convneighbours_block():
     input_nside = 1
     output_nside = 1
     m = np.arange(healpy.nside2npix(input_nside))
-    inputs = tf.keras.layers.Input((len(m), 1))
+    inputs = keras.layers.Input((len(m), 1))
     x = nnhealpix.layers.ConvNeighbours(input_nside, filters=1, kernel_size=9)(inputs)
-    model = tf.keras.models.Model(inputs=inputs, outputs=x)
-    model.compile(loss=tf.keras.losses.mse, optimizer=tf.keras.optimizers.SGD(lr=0.01))
+    model = keras.models.Model(inputs=inputs, outputs=x)
+    model.compile(loss=keras.losses.mse, optimizer=keras.optimizers.SGD(lr=0.01))
     model.layers[2].set_weights(
         [
             np.array(
