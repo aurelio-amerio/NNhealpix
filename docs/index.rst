@@ -6,7 +6,7 @@
 Welcome to HealpixNN's documentation!
 =====================================
 
-NNHealpix is a Python package for the Keras library that implements
+NNHealpix is a Python package for the tensorflow.keras library that implements
 convolution and pooling layers defined on a HEALPix sphere. This
 library can be used to define convolutional neural networks that
 operate on the sphere; so far it has mainly been used for analysis of
