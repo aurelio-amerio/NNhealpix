@@ -7,19 +7,23 @@ networks to spherical signal projected on the healpix grid.
 ## Requirements
 
 - Healpy
-- Tensorflow 2+
 - Matplotlib
 - NumPy
 - Numba
 - SciPy
+- Tensorflow 2+
 
 ## Install
 
 The code is still under development. To install, use the following command:
-```
+```bash
 [sudo] python setup.py develop [--user]
 ```
 
+To automatically install the requirements, use the following command:
+```bash
+pip install -r requirements.txt
+```
 
 ## Testing
 
