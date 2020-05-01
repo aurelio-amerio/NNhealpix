@@ -3,13 +3,12 @@
 import healpy as hp
 import healpy.projaxes as pa
 import numpy as np
-import keras
-from keras.models import load_model
+# import tensorflow.keras
+# from tensorflow.keras.models import load_model
 import nnhealpix as nnh
 import matplotlib.pyplot as plt
-import matplotlib
 from matplotlib.colors import LinearSegmentedColormap
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 CMAP_GRAY_TO_BLACK = LinearSegmentedColormap.from_list("", ["#FEFAFA", "black"])
 CMAP_WHITE_TO_BLACK = LinearSegmentedColormap.from_list("", ["#FEFAFA", "black"])
@@ -393,7 +392,7 @@ def plot_layer_nodes(
     """Create a map of the active nodes in a given layer
 
     Args:
-        * model (Keras model object): Neural network model to analyze.
+        * model (tf.keras model object): Neural network model to analyze.
         * layer (int): number of the layer to analyze.
         * X_val (array-like): Set of inputs used for network
           validation.
