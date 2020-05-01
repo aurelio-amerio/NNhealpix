@@ -7,12 +7,11 @@ networks to spherical signal projected on the healpix grid.
 ## Requirements
 
 - Healpy
-- tensorflow
+- Tensorflow 2+
 - Matplotlib
 - NumPy
 - Numba
 - SciPy
-- TensorFlow
 
 ## Install
 

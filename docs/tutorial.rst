@@ -52,7 +52,7 @@ apply a random rotation to each of them.
 .. code:: ipython3
 
     import healpy as hp
-    from tensorflow.keras.utils import np_utils
+    from tensorflow.keras.utils import to_categorical
     from nnhealpix.projections import projectimages
 
     NTRAIN, NVAL = 10000, 1000
@@ -87,8 +87,8 @@ apply a random rotation to each of them.
     )):
         X_val_hp[i, :] = hp_img
         y_val_hp[i] = y_val[id_img]
-    y_train = np_utils.to_categorical(y_train_hp)
-    y_val = np_utils.to_categorical(y_val_hp)
+    y_train = to_categorical(y_train_hp)
+    y_val = to_categorical(y_val_hp)
 
 
 Let's check that the projection went well by plotting one of them using the
@@ -214,7 +214,7 @@ ipython3
         X_test_hp[i, :] = hp_img
         y_test_hp[i] = y_test[id_img]
     
-    y_test = np_utils.to_categorical(y_test_hp)
+    y_test = to_categorical(y_test_hp)
 
     X_test = X_test_hp.reshape(X_test_hp.shape[0], len(X_test_hp[0]), 1).astype("float32")
     X_test = X_test / 255
