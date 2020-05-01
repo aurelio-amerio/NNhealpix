@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 
 import numpy as np
-import tensorflow.keras
 import os.path
 from tensorflow.keras.layers import Conv1D
 import tensorflow.keras.backend as K
@@ -11,7 +10,7 @@ import nnhealpix as nnh
 
 
 class OrderMap(Layer):
-    """Defines a tensorflow.keras layer able to operate on HEALPix maps.
+    """Defines a Keras layer able to operate on HEALPix maps.
 
     This layer has two purposes:
 
@@ -52,7 +51,7 @@ class OrderMap(Layer):
 
 
 def Dgrade(nside_in, nside_out):
-    """tensorflow.keras layer performing a downgrade of input maps
+    """Keras layer performing a downgrade of input maps
 
     Parameters
     ----------
@@ -78,20 +77,20 @@ def Dgrade(nside_in, nside_out):
     def f(x):
         y = OrderMap(pixel_indices)(x)
         pool_size = int((nside_in / nside_out) ** 2.0)
-        y = tensorflow.keras.layers.AveragePooling1D(pool_size=pool_size)(y)
+        y = tf.keras.layers.AveragePooling1D(pool_size=pool_size)(y)
         return y
 
     return f
 
 
 def Pooling(nside_in, nside_out, layer1D, *args, **kwargs):
-    """tensorflow.keras layer performing a downgrade+custom pooling of input maps
+    """Keras layer performing a downgrade+custom pooling of input maps
 
     Args:
         * nside_in (integer): ``NSIDE`` parameter for the input maps.
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
         * layer1D (layer object): a 1-D layer operation, like
-          :code:`ktensorflow.keras.layers.MaxPooling1D`
+          :code:`tf.keras.layers.MaxPooling1D`
         * args (any): Positional arguments to be passed to :code:`layer1D`
         * kwargs: keyword arguments to be passed to
           :code:`layer1D`. The keyword :code:`pool_size` should not be
@@ -120,31 +119,31 @@ def Pooling(nside_in, nside_out, layer1D, *args, **kwargs):
 
 
 def MaxPooling(nside_in, nside_out):
-    """tensorflow.keras layer performing a downgrading+maxpooling of input maps
+    """Keras layer performing a downgrading+maxpooling of input maps
 
     Args:
         * nside_in (integer): ``NSIDE`` parameter for the input maps.
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, tensorflow.keras.layers.MaxPooling1D)
+    return Pooling(nside_in, nside_out, tf.keras.layers.MaxPooling1D)
 
 
 def AveragePooling(nside_in, nside_out):
-    """tensorflow.keras layer performing a downgrading+averaging of input maps
+    """Keras layer performing a downgrading+averaging of input maps
 
     Args:
         * nside_in (integer): ``NSIDE`` parameter for the input maps.
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, tensorflow.keras.layers.AveragePooling1D)
+    return Pooling(nside_in, nside_out, tf.keras.layers.AveragePooling1D)
 
 
 def DegradeAndConvNeighbours(
     nside_in, nside_out, filters, use_bias=False, trainable=True
 ):
-    """tensorflow.keras layer performing a downgrading and convolution of input maps.
+    """Keras layer performing a downgrading and convolution of input maps.
 
     Args:
         * nside_in (integer): ``NSIDE`` parameter for the input maps.
@@ -172,7 +171,7 @@ def DegradeAndConvNeighbours(
     def f(x):
         y = OrderMap(pixel_indices)(x)
         kernel_size = int((nside_in / nside_out) ** 2.0)
-        y = tensorflow.keras.layers.Conv1D(
+        y = Conv1D(
             filters,
             kernel_size=kernel_size,
             strides=kernel_size,
@@ -186,7 +185,7 @@ def DegradeAndConvNeighbours(
 
 
 def ConvNeighbours(nside, kernel_size, filters, use_bias=False, trainable=True):
-    """tensorflow.keras layer to perform pixel neighbour convolution.
+    """Keras layer to perform pixel neighbour convolution.
 
     Args:
         * nside(integer): ``NSIDE`` parameter for the input maps.
@@ -213,7 +212,7 @@ def ConvNeighbours(nside, kernel_size, filters, use_bias=False, trainable=True):
 
     def f(x):
         y = OrderMap(pixel_indices)(x)
-        y = tensorflow.keras.layers.Conv1D(
+        y = Conv1D(
             filters,
             kernel_size=kernel_size,
             strides=kernel_size,

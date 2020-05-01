@@ -3,11 +3,10 @@
 import healpy as hp
 import healpy.projaxes as pa
 import numpy as np
-import tensorflow.keras
-from tensorflow.keras.models import load_model
+# import tensorflow.keras
+# from tensorflow.keras.models import load_model
 import nnhealpix as nnh
 import matplotlib.pyplot as plt
-import matplotlib
 from matplotlib.colors import LinearSegmentedColormap
 from tensorflow.keras import backend as K
 

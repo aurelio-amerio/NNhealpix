@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 
-"""Neural networks on the Healpix sphere in tensorflow.keras.
+"""Neural networks on the Healpix sphere in Keras.
 
-The NNhealpix module implements tensorflow.keras layers that work on a Healpix
+The NNhealpix module implements Keras layers that work on a Healpix
 sphere.
 
 """
@@ -10,7 +10,7 @@ sphere.
 import healpy as hp
 import numpy as np
 import os.path
-import numba
+# import numba
 
 __version__ = "0.1.0"
 

@@ -5,7 +5,7 @@ Welcome to NNHealpix documentation! In this tutorial, we show how to
 use the library to perform a classification exercise. We are going to
 project handwritten digits on a sphere, and we will build a simple
 Convolutional Neural Network (CNN) to recognize digits. We will use
-tensorflow.keras and the MNIST dataset.
+Keras and the MNIST dataset.
 
 Build training and validation sets
 ----------------------------------
@@ -14,7 +14,7 @@ We are going to use the MNIST database to build our training and
 validation sets. MINST is a set of 28×28 grayscale images representing
 handwritten digits, and it is a widely-used database for
 classification problems in Machine Learning. The MNIST dataset is
-available in tensorflow.keras, so we simply load it:
+available in Keras, so we simply load it:
 
 .. code:: ipython3
 
@@ -130,7 +130,7 @@ Build neural network and train
 
 Now it's time to build a neural network capable of recognizing digits. We will
 use a standard architecture used for this kind of tasks in 2-D domains, but
-instead of tensorflow.keras' 2-D layers we use :class:`nnhealpix.layers.ConvNeighbours`,
+instead of Keras' 2-D layers we use :class:`nnhealpix.layers.ConvNeighbours`,
 (convolution on the HEALPix sphere) and :class:`nnhealpix.layers.MaxPooling`
 (max-pooling).
 
@@ -139,34 +139,34 @@ instead of tensorflow.keras' 2-D layers we use :class:`nnhealpix.layers.ConvNeig
     import tensorflow.keras.layers
     import nnhealpix.layers
 
-    inputs = tensorflow.keras.layers.Input(shape)
+    inputs = tf.keras.layers.Input(shape)
     x = nnhealpix.layers.ConvNeighbours(NSIDE, filters=32, kernel_size=9)(inputs)
-    x = tensorflow.keras.layers.Activation("relu")(x)
+    x = tf.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE, NSIDE//2)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//2, filters=32, kernel_size=9)(x)
-    x = tensorflow.keras.layers.Activation("relu")(x)
+    x = tf.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//2, NSIDE//4)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//4, filters=32, kernel_size=9)(x)
-    x = tensorflow.keras.layers.Activation("relu")(x)
+    x = tf.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//4, NSIDE//8)(x)
     x = nnhealpix.layers.ConvNeighbours(NSIDE//8, filters=32, kernel_size=9)(x)
-    x = tensorflow.keras.layers.Activation("relu")(x)
+    x = tf.keras.layers.Activation("relu")(x)
     x = nnhealpix.layers.MaxPooling(NSIDE//8, NSIDE//16)(x)
-    x = tensorflow.keras.layers.Dropout(0.2)(x)
-    x = tensorflow.keras.layers.Flatten()(x)
-    x = tensorflow.keras.layers.Dense(48)(x)
-    x = tensorflow.keras.layers.Activation("relu")(x)
-    x = tensorflow.keras.layers.Dense(num_classes)(x)
-    out = tensorflow.keras.layers.Activation("softmax")(x)
+    x = tf.keras.layers.Dropout(0.2)(x)
+    x = tf.keras.layers.Flatten()(x)
+    x = tf.keras.layers.Dense(48)(x)
+    x = tf.keras.layers.Activation("relu")(x)
+    x = tf.keras.layers.Dense(num_classes)(x)
+    out = tf.keras.layers.Activation("softmax")(x)
 
 The convolution and pooling layers produce intermediate maps whose resolution
-scales down to ``NSIDE=1``. Let's build our model using tensorflow.keras:
+scales down to ``NSIDE=1``. Let's build our model using Keras:
 
 .. code:: ipython3
 
-    model = tensorflow.keras.models.Model(inputs=inputs, outputs=out)
-    opt = tensorflow.keras.optimizers.Adam(lr=0.001)
-    model.compile(loss=tensorflow.keras.losses.mse, optimizer=opt, metrics=["accuracy"])
+    model = tf.keras.models.Model(inputs=inputs, outputs=out)
+    opt = tf.keras.optimizers.Adam(lr=0.001)
+    model.compile(loss=tf.keras.losses.mse, optimizer=opt, metrics=["accuracy"])
 
 
 We train the network, using the ``X_train`` and ``Y_train`` variables we have
@@ -298,7 +298,7 @@ section:
 
 .. image:: images/output_35_0.png
 
-To inspect how the network works, we can make use of tensorflow.keras'
+To inspect how the network works, we can make use of Keras'
 ``get_layer_output``. Let's show an example. First, we choose a random map in
 the test set:
 

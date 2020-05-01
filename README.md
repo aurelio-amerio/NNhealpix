@@ -7,7 +7,7 @@ networks to spherical signal projected on the healpix grid.
 ## Requirements
 
 - Healpy
-- tensorflow.keras
+- tensorflow
 - Matplotlib
 - NumPy
 - Numba

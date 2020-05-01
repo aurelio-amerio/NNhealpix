@@ -1,4 +1,4 @@
-tensorflow.keras layers
+Keras layers
 ============
 
 The building block of any Neural Network (NN) is the
@@ -11,7 +11,7 @@ commonly-used NN operations on HEALPix maps:
 * :func:`nnhealpix.layers.MaxPooling` (max pooling);
 * :func:`nnhealpix.layers.Pooling` (pooling with custom function).
 
-These layers can be intertwined with tensorflow.keras layers, as in the following
+These layers can be intertwined with Keras layers, as in the following
 example::
 
   # Build a simple classification NN
@@ -22,20 +22,20 @@ example::
   NSIDE_INPUT = 32
   NSIDE_OUTPUT = 8
   
-  inputs = tensorflow.keras.layers.Input(shape)
+  inputs = tf.keras.layers.Input(shape)
   
   x = nnhealpix.layers.ConvNeighbours(NSIDE_INPUT, filters=32, kernel_size=9)(inputs)
-  x = tensorflow.keras.layers.Activation('relu')(x)
+  x = tf.keras.layers.Activation('relu')(x)
   x = nnhealpix.layers.MaxPooling(NSIDE_INPUT, NSIDE_OUTPUT)(x)
-  x = tensorflow.keras.layers.Dropout(0.2)(x)
-  x = tensorflow.keras.layers.Flatten()(x)
-  x = tensorflow.keras.layers.Dense(128)(x)
-  x = tensorflow.keras.layers.Activation('relu')(x)
-  x = tensorflow.keras.layers.Dense(num_classes)(x)
-  out = tensorflow.keras.layers.Activation('softmax')(x)
+  x = tf.keras.layers.Dropout(0.2)(x)
+  x = tf.keras.layers.Flatten()(x)
+  x = tf.keras.layers.Dense(128)(x)
+  x = tf.keras.layers.Activation('relu')(x)
+  x = tf.keras.layers.Dense(num_classes)(x)
+  out = tf.keras.layers.Activation('softmax')(x)
   
-  model = tensorflow.keras.models.Model(inputs=inputs, outputs=out)
-  model.compile(loss=tensorflow.keras.losses.mse, optimizer='adam', metrics=['accuracy'])
+  model = tf.keras.models.Model(inputs=inputs, outputs=out)
+  model.compile(loss=tf.keras.losses.mse, optimizer='adam', metrics=['accuracy'])
 
 Convolutional layer
 -------------------
