@@ -3,6 +3,7 @@
 import nnhealpix as nnh
 import nnhealpix.layers
 import tensorflow as tf
+import keras
 import numpy as np
 import healpy
 
