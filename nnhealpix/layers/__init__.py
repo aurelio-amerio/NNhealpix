@@ -2,10 +2,9 @@
 
 import numpy as np
 import os.path
-import keras
-from keras.layers import Conv1D
-import keras.backend as K
-from keras.layers import Layer
+from tensorflow.keras.layers import Conv1D
+import tensorflow.keras.backend as K
+from tensorflow.keras.layers import Layer
 import tensorflow as tf
 import nnhealpix as nnh
 
@@ -22,16 +21,16 @@ class OrderMap(Layer):
     def __init__(self, indices, **kwargs):
         self.input_indices = np.array(indices, dtype="int32")
         Kindices = K.variable(indices, dtype="int32")
-        self.indices = Kindices
+        self.indices = K.stop_gradient(Kindices)
         super(OrderMap, self).__init__(**kwargs)
 
     def build(self, input_shape):
-        "Create the weights for the layer"
+        """Create the weights for the layer"""
         self.in_shape = input_shape
         super(OrderMap, self).build(input_shape)
 
     def call(self, x):
-        "Implement the layer's logic"
+        """Implement the layer's logic"""
         # x = tf.to_float(x)
         x = tf.cast(x, dtype=tf.float32)
         zero = tf.fill([tf.shape(x)[0], 1, tf.shape(x)[2]], 0.0)
@@ -41,7 +40,7 @@ class OrderMap(Layer):
         return reordered
 
     def compute_output_shape(self, input_shape):
-        "Compute the shape of the layer's output."
+        """Compute the shape of the layer's output."""
         return (input_shape[0], int(self.output_dim[1]), int(self.output_dim[2]))
 
     def get_config(self):
@@ -78,7 +77,7 @@ def Dgrade(nside_in, nside_out):
     def f(x):
         y = OrderMap(pixel_indices)(x)
         pool_size = int((nside_in / nside_out) ** 2.0)
-        y = keras.layers.AveragePooling1D(pool_size=pool_size)(y)
+        y = tf.keras.layers.AveragePooling1D(pool_size=pool_size)(y)
         return y
 
     return f
@@ -127,7 +126,7 @@ def MaxPooling(nside_in, nside_out):
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, keras.layers.MaxPooling1D)
+    return Pooling(nside_in, nside_out, tf.keras.layers.MaxPooling1D)
 
 
 def AveragePooling(nside_in, nside_out):
@@ -138,11 +137,11 @@ def AveragePooling(nside_in, nside_out):
         * nside_out (integer): ``NSIDE`` parameter for the output maps.
     """
 
-    return Pooling(nside_in, nside_out, keras.layers.AveragePooling1D)
+    return Pooling(nside_in, nside_out, tf.keras.layers.AveragePooling1D)
 
 
 def DegradeAndConvNeighbours(
-    nside_in, nside_out, filters, use_bias=False, trainable=True
+        nside_in, nside_out, filters, use_bias=False, trainable=True
 ):
     """Keras layer performing a downgrading and convolution of input maps.
 
